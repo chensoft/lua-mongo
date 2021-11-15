@@ -1,5 +1,5 @@
 package = "mongo"
-version = "1.2.3-1"
+version = "1.2.3-2"
 source = {
    url = "git://github.com/chensoft/lua-mongo",
    branch = "v1.2.3"
