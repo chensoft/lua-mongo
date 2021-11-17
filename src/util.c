@@ -143,8 +143,14 @@ int commandStatus(lua_State *L, bool status, const bson_error_t *error) {
 }
 
 int commandReply(lua_State *L, bool status, bson_t *reply, const bson_error_t *error) {
-    pushBSONWithSteal(L, reply);
-    return 1;
+    bson_iter_t iter;
+    if (bson_iter_init(&iter, reply) && bson_iter_next(&iter)) {
+        pushBSONWithSteal(L, reply);
+        return 1;
+    } else {
+        bson_destroy(reply);
+        return commandError(L, error);
+    }
 }
 
 int commandStrVec(lua_State *L, char **strv, const bson_error_t *error) {
