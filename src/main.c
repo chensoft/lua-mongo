@@ -49,7 +49,12 @@ static const luaL_Reg funcs[] = {
 char NEW_BINARY, NEW_DATETIME, NEW_DECIMAL128, NEW_JAVASCRIPT, NEW_REGEX, NEW_TIMESTAMP;
 char GLOBAL_MAXKEY, GLOBAL_MINKEY, GLOBAL_NULL;
 
-int luaopen_mongo(lua_State *L) {
+#ifdef _MSC_VER
+__declspec(dllexport) int luaopen_mongo(lua_State *L)
+#else
+int luaopen_mongo(lua_State *L)
+#endif
+{
 #if LUA_VERSION_NUM < 502
 	luaL_register(L, "mongo", funcs);
 #else
